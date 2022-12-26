@@ -4,7 +4,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
-actual class CommonMutableStateFlow<T> actual constructor(
+actual open class CommonMutableStateFlow<T> actual constructor(
     private val flow: MutableStateFlow<T>
 ): CommonStateFlow<T>(flow), MutableStateFlow<T> {
 
