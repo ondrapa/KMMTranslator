@@ -1,29 +1,52 @@
 plugins {
     kotlin("multiplatform")
+    kotlin("native.cocoapods")
     id("com.android.library")
+    kotlin("plugin.serialization") version Dependencies.kotlinVersion
+    id("com.squareup.sqldelight")
 }
 
 kotlin {
     android()
-    
-    listOf(
-        iosX64(),
-        iosArm64(),
-        iosSimulatorArm64()
-    ).forEach {
-        it.binaries.framework {
+    iosX64()
+    iosArm64()
+    iosSimulatorArm64()
+
+    cocoapods {
+        summary = "Some description for the Shared Module"
+        homepage = "Link to the Shared Module homepage"
+        version = "1.0"
+        ios.deploymentTarget = "14.1"
+        podfile = project.file("../iosApp/Podfile")
+        framework {
             baseName = "shared"
         }
     }
 
     sourceSets {
-        val commonMain by getting
+        val commonMain by getting {
+            dependencies {
+                implementation(Dependencies.ktorCore)
+                implementation(Dependencies.ktorSerialization)
+                implementation(Dependencies.ktorSerializationJson)
+                implementation(Dependencies.sqlDelightRuntime)
+                implementation(Dependencies.sqlDelightCoroutinesExtensions)
+                implementation(Dependencies.kotlinDateTime)
+            }
+        }
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test"))
+                implementation(Dependencies.assertK)
+                implementation(Dependencies.turbine)
             }
         }
-        val androidMain by getting
+        val androidMain by getting {
+            dependencies {
+                implementation(Dependencies.ktorAndroid)
+                implementation(Dependencies.sqlDelightAndroidDriver)
+            }
+        }
         val androidTest by getting
         val iosX64Main by getting
         val iosArm64Main by getting
@@ -33,6 +56,11 @@ kotlin {
             iosX64Main.dependsOn(this)
             iosArm64Main.dependsOn(this)
             iosSimulatorArm64Main.dependsOn(this)
+
+            dependencies {
+                implementation(Dependencies.ktorIOS)
+                implementation(Dependencies.sqlDelightNativeDriver)
+            }
         }
         val iosX64Test by getting
         val iosArm64Test by getting
@@ -47,10 +75,10 @@ kotlin {
 }
 
 android {
-    namespace = "com.example.translator"
-    compileSdk = 32
+    namespace = "com.plcoding.translator_kmm"
+    compileSdk = 33
     defaultConfig {
-        minSdk = 23
-        targetSdk = 32
+        minSdk = 24
+        targetSdk = 33
     }
 }

@@ -1,6 +1,9 @@
 plugins {
     id("com.android.application")
     kotlin("android")
+    id("kotlin-kapt")
+    id("dagger.hilt.android.plugin")
+    kotlin("plugin.serialization") version Dependencies.kotlinVersion
 }
 
 android {
@@ -33,10 +36,28 @@ android {
 
 dependencies {
     implementation(project(":shared"))
-    implementation("androidx.compose.ui:ui:1.2.1")
-    implementation("androidx.compose.ui:ui-tooling:1.2.1")
-    implementation("androidx.compose.ui:ui-tooling-preview:1.2.1")
-    implementation("androidx.compose.foundation:foundation:1.2.1")
-    implementation("androidx.compose.material:material:1.2.1")
-    implementation("androidx.activity:activity-compose:1.5.1")
+    implementation(Dependencies.composeUi)
+    implementation(Dependencies.composeUiTooling)
+    implementation(Dependencies.composeUiToolingPreview)
+    implementation(Dependencies.composeFoundation)
+    implementation(Dependencies.composeMaterial)
+    implementation(Dependencies.activityCompose)
+    implementation(Dependencies.composeIconsExtended)
+    implementation(Dependencies.composeNavigation)
+    implementation(Dependencies.coilCompose)
+
+    implementation(Dependencies.hiltAndroid)
+    kapt(Dependencies.hiltAndroidCompiler)
+    kapt(Dependencies.hiltCompiler)
+    implementation(Dependencies.hiltNavigationCompose)
+
+    implementation(Dependencies.ktorAndroid)
+
+    androidTestImplementation(Dependencies.testRunner)
+    androidTestImplementation(Dependencies.jUnit)
+    androidTestImplementation(Dependencies.composeTesting)
+    debugImplementation(Dependencies.composeTestManifest)
+
+    kaptAndroidTest(Dependencies.hiltAndroidCompiler)
+    androidTestImplementation(Dependencies.hiltTesting)
 }
