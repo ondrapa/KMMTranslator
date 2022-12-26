@@ -8,11 +8,11 @@ plugins {
 
 android {
     namespace = "com.example.translator.android"
-    compileSdk = 32
+    compileSdk = 33
     defaultConfig {
         applicationId = "com.example.translator.android"
-        minSdk = 23
-        targetSdk = 32
+        minSdk = 24
+        targetSdk = 33
         versionCode = 1
         versionName = "1.0"
     }
@@ -20,7 +20,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.3.0"
+        kotlinCompilerExtensionVersion = Dependencies.composeVersion
     }
     packagingOptions {
         resources {
