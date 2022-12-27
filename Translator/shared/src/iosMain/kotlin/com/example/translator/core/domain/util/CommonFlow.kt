@@ -18,6 +18,5 @@ actual open class CommonFlow<T> actual constructor(
             flow.collect(onCollect)
         }
         return DisposableHandle { job.cancel() }
-
     }
 }
